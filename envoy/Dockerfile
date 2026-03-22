@@ -10,15 +10,17 @@ ARG ENVOY_REF
 
 WORKDIR /workspace/envoy-custom
 
-# Copy stable Envoy sources and wrapper metadata first so small filter changes do not
-# invalidate the dependency preparation layers.
+# Copy wrapper metadata first so small filter changes do not invalidate the
+# dependency preparation layers.
 COPY envoy-custom/.bazelrc /workspace/envoy-custom/.bazelrc
 COPY envoy-custom/.bazelversion /workspace/envoy-custom/.bazelversion
 COPY envoy-custom/BUILD /workspace/envoy-custom/BUILD
 COPY envoy-custom/WORKSPACE /workspace/envoy-custom/WORKSPACE
-COPY envoy-src/ /workspace/envoy-custom/envoy/
 COPY envoy/docker-patches/ /workspace/docker-patches/
-COPY envoy/distfiles/ /workspace/distfiles/
+
+# CI must be able to build from a clean checkout without local vendored Envoy
+# sources or predownloaded distfiles.
+RUN git clone --branch "${ENVOY_REF}" --depth 1 https://github.com/envoyproxy/envoy /workspace/envoy-custom/envoy
 
 # Mirror bazel/ at the wrapper root for Envoy's workspace scripts.
 RUN python3 /workspace/docker-patches/patch_python_dependencies.py
