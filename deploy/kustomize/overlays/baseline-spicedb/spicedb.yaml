@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spicedb
+  namespace: reactive-mesh-authz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spicedb
+  template:
+    metadata:
+      labels:
+        app: spicedb
+    spec:
+      containers:
+        - name: spicedb
+          image: docker.io/reactive-mesh/spicedb:v1.47.1-dev
+          imagePullPolicy: Never
+          args:
+            - serve-testing
+            - --http-enabled
+            - --http-addr=0.0.0.0:8443
+          ports:
+            - containerPort: 8443
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spicedb
+  namespace: reactive-mesh-authz
+spec:
+  selector:
+    app: spicedb
+  ports:
+    - name: http
+      port: 8443
+      targetPort: 8443

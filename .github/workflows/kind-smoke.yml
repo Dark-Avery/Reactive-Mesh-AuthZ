@@ -1,0 +1,136 @@
+name: kind-smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+    paths:
+      - ".github/workflows/kind-smoke.yml"
+      - "baseline/**"
+      - "bench/**"
+      - "common/**"
+      - "deploy/**"
+      - "docs/**"
+      - "envoy/**"
+      - "envoy-custom/**"
+      - "formal/**"
+      - "grpc/**"
+      - "idp/**"
+      - "receiver/**"
+      - "scripts/**"
+      - "Makefile"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            cmake \
+            curl \
+            default-jre-headless \
+            jq \
+            libabsl-dev \
+            libgrpc++-dev \
+            libprotobuf-dev \
+            protobuf-compiler \
+            protobuf-compiler-grpc
+
+      - name: Install kubectl
+        run: |
+          curl --retry 5 --retry-all-errors --retry-delay 2 -fsSL -o kubectl https://dl.k8s.io/release/v1.35.3/bin/linux/amd64/kubectl
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/kubectl
+
+      - name: Install kind
+        run: |
+          curl --retry 5 --retry-all-errors --retry-delay 2 -fsSL -o kind https://github.com/kubernetes-sigs/kind/releases/download/v0.31.0/kind-linux-amd64
+          chmod +x kind
+          sudo mv kind /usr/local/bin/kind
+
+      - name: Create kind cluster
+        run: |
+          : "${KIND_CLUSTER_NAME:=reactive-mesh-authz}"
+          : "${KIND_CONFIG:=deploy/kind/kind-config.yaml}"
+          kind create cluster --name "${KIND_CLUSTER_NAME}" --config "${KIND_CONFIG}"
+          kind export kubeconfig --name "${KIND_CLUSTER_NAME}"
+          kubectl get nodes
+
+      - name: Verify prebuilt images
+        if: ${{ env.SKIP_IMAGE_BUILD == '1' }}
+        run: |
+          docker image inspect reactive-mesh/receiver:dev >/dev/null
+          docker image inspect reactive-mesh/baseline-authz:dev >/dev/null
+          docker image inspect reactive-mesh/grpc-server:dev >/dev/null
+          docker image inspect reactive-mesh/redis:dev >/dev/null
+          docker image inspect reactive-mesh/demo-idp:v2 >/dev/null
+          docker image inspect reactive-mesh/openfga:v1.12.1-dev >/dev/null
+          docker image inspect reactive-mesh/opa-envoy:dev >/dev/null
+          docker image inspect reactive-mesh/envoy-reactive:dev >/dev/null
+          docker image inspect reactive-mesh/envoy-baseline:dev >/dev/null
+
+      - name: Build images
+        if: ${{ env.SKIP_IMAGE_BUILD != '1' }}
+        env:
+          DOCKER_BUILDKIT: "1"
+        run: |
+          docker build -t reactive-mesh/receiver:dev -f receiver/Dockerfile .
+          docker build -t reactive-mesh/baseline-authz:dev -f baseline/opa/Dockerfile .
+          docker build -t reactive-mesh/grpc-server:dev -f grpc/server/Dockerfile .
+          docker build -t reactive-mesh/redis:dev -f deploy/images/redis/Dockerfile .
+          docker build -t reactive-mesh/demo-idp:v2 idp/demo
+          docker build -t reactive-mesh/openfga:v1.12.1-dev -f deploy/images/openfga/Dockerfile deploy/images/openfga
+          docker pull openpolicyagent/opa:latest-envoy-static
+          docker tag openpolicyagent/opa:latest-envoy-static reactive-mesh/opa-envoy:dev
+          docker build -t reactive-mesh/envoy-reactive:dev -f envoy/Dockerfile --build-arg ENVOY_CONFIG=envoy-reactive.yaml .
+          docker tag reactive-mesh/envoy-reactive:dev reactive-mesh/envoy-baseline:dev
+
+      - name: Load images into kind
+        run: |
+          : "${KIND_CLUSTER_NAME:=reactive-mesh-authz}"
+          kind load docker-image \
+            reactive-mesh/receiver:dev \
+            reactive-mesh/baseline-authz:dev \
+            reactive-mesh/grpc-server:dev \
+            reactive-mesh/redis:dev \
+            reactive-mesh/demo-idp:v2 \
+            reactive-mesh/openfga:v1.12.1-dev \
+            reactive-mesh/opa-envoy:dev \
+            reactive-mesh/envoy-reactive:dev \
+            reactive-mesh/envoy-baseline:dev \
+            --name "${KIND_CLUSTER_NAME}"
+
+      - name: Deploy reactive and baseline overlays
+        run: |
+          kubectl apply -k deploy/kustomize/overlays/reactive
+          kubectl apply -k deploy/kustomize/overlays/baseline
+          kubectl delete deployment/baseline-authz service/baseline-authz -n reactive-mesh-authz --ignore-not-found
+          kubectl rollout restart deployment/envoy-baseline -n reactive-mesh-authz
+          kubectl rollout status deployment/receiver -n reactive-mesh-authz --timeout=180s
+          kubectl rollout status deployment/grpc-server -n reactive-mesh-authz --timeout=180s
+          kubectl rollout status deployment/redis -n reactive-mesh-authz --timeout=180s
+          kubectl rollout status deployment/opa -n reactive-mesh-authz --timeout=180s
+          kubectl rollout status deployment/envoy-reactive -n reactive-mesh-authz --timeout=180s
+          kubectl rollout status deployment/envoy-baseline -n reactive-mesh-authz --timeout=180s
+          kubectl get pods,svc -n reactive-mesh-authz -o wide
+
+      - name: Install metrics-server
+        run: ./scripts/install_metrics_server.sh
+
+      - name: Run unified verification
+        run: ./scripts/verify_mvp.sh
+
+      - name: Upload smoke artifacts
+        if: ${{ env.SKIP_ARTIFACT_UPLOAD != '1' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-results
+          path: |
+            experiments/results/verify-mvp

@@ -1,0 +1,29 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: reactive-mesh-istio
+  namespace: istio-system
+spec:
+  profile: default
+  meshConfig:
+    accessLogFile: /dev/stdout
+    extensionProviders:
+      - name: reactive-mesh-http-authz
+        envoyExtAuthzHttp:
+          service: baseline-authz.reactive-mesh-authz.svc.cluster.local
+          port: "9191"
+          includeHeadersInCheck:
+            - authorization
+            - x-sub
+            - x-sid
+            - x-jti
+            - content-type
+            - te
+            - user-agent
+            - grpc-timeout
+          headersToUpstreamOnAllow:
+            - authorization
+            - x-current-source
+            - x-matched-identifiers
+          headersToDownstreamOnDeny:
+            - content-type

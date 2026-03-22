@@ -1,0 +1,13 @@
+namespace: reactive-mesh-authz
+
+images:
+  receiver: reactive-mesh/receiver:dev
+  grpcServer: reactive-mesh/grpc-server:dev
+  baselineAuthz: reactive-mesh/baseline-authz:dev
+  envoyReactive: reactive-mesh/envoy-reactive:dev
+  envoyBaseline: reactive-mesh/envoy-baseline:dev
+  redis: reactive-mesh/redis:dev
+
+mode: reactive
+baselineMode: poll
+pollIntervalMs: 1000

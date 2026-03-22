@@ -1,0 +1,29 @@
+namespace: reactive-mesh-authz
+resources:
+  - ../../base
+  - ../../idp-demo
+  - opa-policy-configmap.yaml
+  - opa.yaml
+  - envoy-baseline-configmap.yaml
+  - envoy-baseline.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: baseline-authz
+    patch: |-
+      $patch: delete
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: baseline-authz
+        namespace: reactive-mesh-authz
+  - target:
+      kind: Service
+      name: baseline-authz
+    patch: |-
+      $patch: delete
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: baseline-authz
+        namespace: reactive-mesh-authz

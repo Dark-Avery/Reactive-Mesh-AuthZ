@@ -1,0 +1,6 @@
+namespace: reactive-mesh-authz
+resources:
+  - ../../base
+  - ../../idp-demo
+  - envoy-reactive-configmap.yaml
+  - envoy-reactive.yaml

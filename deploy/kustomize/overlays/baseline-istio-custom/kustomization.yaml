@@ -1,0 +1,16 @@
+resources:
+  - ../../base
+  - ../../idp-demo
+  - istio-gateway.yaml
+  - istio-virtualservice.yaml
+  - istio-request-authentication.yaml
+  - istio-custom-authz-policy.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: baseline-authz
+      namespace: reactive-mesh-authz
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/2/value
+        value: direct

@@ -1,0 +1,17 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: reactive-mesh-custom-ext-authz
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  action: CUSTOM
+  provider:
+    name: reactive-mesh-http-authz
+  rules:
+    - to:
+        - operation:
+            paths:
+              - /reactive_mesh.demo.DemoService/Stream

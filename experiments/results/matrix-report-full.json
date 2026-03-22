@@ -1,0 +1,509 @@
+{
+  "dataset": {
+    "modes": [
+      "baseline-ext_authz",
+      "baseline-istio-custom",
+      "baseline-openfga",
+      "reactive"
+    ],
+    "profiles": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "total_rows": 360
+  },
+  "per_mode_profile": [
+    {
+      "mode": "baseline-ext_authz",
+      "profile": "high",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2021.2648,
+      "risk_window_ms_p50": 2011.821,
+      "risk_window_ms_p95": 2016.2884999999999,
+      "risk_window_ms_p99": 2223.0352000000003,
+      "risk_window_ms_ci95": [
+        2001.8965241119915,
+        2040.6330758880083
+      ],
+      "risk_window_messages_mean": 187.96666666666667,
+      "risk_window_messages_p50": 198.0,
+      "risk_window_messages_p95": 198.0,
+      "risk_window_messages_p99": 198.71,
+      "risk_window_messages_ci95": [
+        178.46615140255994,
+        197.4671819307734
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-ext_authz",
+      "profile": "low",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2035.8512333333333,
+      "risk_window_ms_p50": 2024.415,
+      "risk_window_ms_p95": 2116.7122999999997,
+      "risk_window_ms_p99": 2196.43985,
+      "risk_window_ms_ci95": [
+        2020.5828195475224,
+        2051.1196471191442
+      ],
+      "risk_window_messages_mean": 10.733333333333333,
+      "risk_window_messages_p50": 11.0,
+      "risk_window_messages_p95": 11.0,
+      "risk_window_messages_p99": 11.0,
+      "risk_window_messages_ci95": [
+        10.370180177544501,
+        11.096486489122164
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-ext_authz",
+      "profile": "medium",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2036.6788666666666,
+      "risk_window_ms_p50": 2032.103,
+      "risk_window_ms_p95": 2052.4405,
+      "risk_window_ms_p99": 2087.6119000000003,
+      "risk_window_ms_ci95": [
+        2031.732912313162,
+        2041.6248210201713
+      ],
+      "risk_window_messages_mean": 39.766666666666666,
+      "risk_window_messages_p50": 41.0,
+      "risk_window_messages_p95": 41.0,
+      "risk_window_messages_p99": 41.0,
+      "risk_window_messages_ci95": [
+        38.08642619856356,
+        41.44690713476977
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-istio-custom",
+      "profile": "high",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2027.9271,
+      "risk_window_ms_p50": 2011.4395,
+      "risk_window_ms_p95": 2015.6426,
+      "risk_window_ms_p99": 2372.5181600000005,
+      "risk_window_ms_ci95": [
+        1994.7655423024944,
+        2061.088657697506
+      ],
+      "risk_window_messages_mean": 187.1,
+      "risk_window_messages_p50": 198.0,
+      "risk_window_messages_p95": 199.0,
+      "risk_window_messages_p99": 199.0,
+      "risk_window_messages_ci95": [
+        174.94874492457484,
+        199.25125507542515
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-istio-custom",
+      "profile": "low",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2037.1271,
+      "risk_window_ms_p50": 2020.7350000000001,
+      "risk_window_ms_p95": 2122.8943499999996,
+      "risk_window_ms_p99": 2291.01973,
+      "risk_window_ms_ci95": [
+        2014.2034140218743,
+        2060.0507859781255
+      ],
+      "risk_window_messages_mean": 10.4,
+      "risk_window_messages_p50": 11.0,
+      "risk_window_messages_p95": 11.0,
+      "risk_window_messages_p99": 11.0,
+      "risk_window_messages_ci95": [
+        9.738161112774659,
+        11.061838887225342
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-istio-custom",
+      "profile": "medium",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2030.2938666666666,
+      "risk_window_ms_p50": 2030.231,
+      "risk_window_ms_p95": 2036.59835,
+      "risk_window_ms_p99": 2037.91169,
+      "risk_window_ms_ci95": [
+        2028.3537981205911,
+        2032.2339352127422
+      ],
+      "risk_window_messages_mean": 40.1,
+      "risk_window_messages_p50": 41.0,
+      "risk_window_messages_p95": 41.0,
+      "risk_window_messages_p99": 41.0,
+      "risk_window_messages_ci95": [
+        38.336,
+        41.864000000000004
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-openfga",
+      "profile": "high",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2024.6420333333333,
+      "risk_window_ms_p50": 2013.555,
+      "risk_window_ms_p95": 2018.29395,
+      "risk_window_ms_p99": 2251.10869,
+      "risk_window_ms_ci95": [
+        2002.8858226467376,
+        2046.398244019929
+      ],
+      "risk_window_messages_mean": 195.56666666666666,
+      "risk_window_messages_p50": 198.0,
+      "risk_window_messages_p95": 198.0,
+      "risk_window_messages_p99": 198.0,
+      "risk_window_messages_ci95": [
+        191.73590110189235,
+        199.39743223144097
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-openfga",
+      "profile": "low",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2033.4153666666666,
+      "risk_window_ms_p50": 2025.0275000000001,
+      "risk_window_ms_p95": 2034.3541,
+      "risk_window_ms_p99": 2190.8724700000002,
+      "risk_window_ms_ci95": [
+        2018.4386374212365,
+        2048.3920959120965
+      ],
+      "risk_window_messages_mean": 10.7,
+      "risk_window_messages_p50": 11.0,
+      "risk_window_messages_p95": 11.0,
+      "risk_window_messages_p99": 11.0,
+      "risk_window_messages_ci95": [
+        10.28875954400901,
+        11.11124045599099
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "baseline-openfga",
+      "profile": "medium",
+      "count": 30,
+      "termination_observed_count": 0,
+      "still_running_after_observe_rate": 1.0,
+      "risk_window_ms_censored_rate": 1.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 2033.6318333333334,
+      "risk_window_ms_p50": 2033.5704999999998,
+      "risk_window_ms_p95": 2049.71555,
+      "risk_window_ms_p99": 2051.2307299999998,
+      "risk_window_ms_ci95": [
+        2030.6607573158458,
+        2036.602909350821
+      ],
+      "risk_window_messages_mean": 39.733333333333334,
+      "risk_window_messages_p50": 41.0,
+      "risk_window_messages_p95": 41.0,
+      "risk_window_messages_p99": 41.0,
+      "risk_window_messages_ci95": [
+        38.0550650048544,
+        41.41160166181227
+      ],
+      "latency_to_enforce_ms_mean": null,
+      "latency_to_enforce_ms_p50": null,
+      "latency_to_enforce_ms_p95": null,
+      "latency_to_enforce_ms_p99": null,
+      "latency_to_enforce_ms_ci95": null
+    },
+    {
+      "mode": "reactive",
+      "profile": "high",
+      "count": 30,
+      "termination_observed_count": 30,
+      "still_running_after_observe_rate": 0.0,
+      "risk_window_ms_censored_rate": 0.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 256.52313333333336,
+      "risk_window_ms_p50": 256.4325,
+      "risk_window_ms_p95": 257.27135,
+      "risk_window_ms_p99": 257.77439000000004,
+      "risk_window_ms_ci95": [
+        256.3513306858622,
+        256.69493598080453
+      ],
+      "risk_window_messages_mean": 0.9,
+      "risk_window_messages_p50": 1.0,
+      "risk_window_messages_p95": 1.0,
+      "risk_window_messages_p99": 1.0,
+      "risk_window_messages_ci95": [
+        0.7908111411518935,
+        1.0091888588481066
+      ],
+      "latency_to_enforce_ms_mean": 256.52313333333336,
+      "latency_to_enforce_ms_p50": 256.4325,
+      "latency_to_enforce_ms_p95": 257.27135,
+      "latency_to_enforce_ms_p99": 257.77439000000004,
+      "latency_to_enforce_ms_ci95": [
+        256.3513306858622,
+        256.69493598080453
+      ]
+    },
+    {
+      "mode": "reactive",
+      "profile": "low",
+      "count": 30,
+      "termination_observed_count": 30,
+      "still_running_after_observe_rate": 0.0,
+      "risk_window_ms_censored_rate": 0.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 256.71656666666667,
+      "risk_window_ms_p50": 256.78650000000005,
+      "risk_window_ms_p95": 257.3112,
+      "risk_window_ms_p99": 257.31868000000003,
+      "risk_window_ms_ci95": [
+        256.58160998693614,
+        256.8515233463972
+      ],
+      "risk_window_messages_mean": 0,
+      "risk_window_messages_p50": 0.0,
+      "risk_window_messages_p95": 0.0,
+      "risk_window_messages_p99": 0.0,
+      "risk_window_messages_ci95": [
+        0.0,
+        0.0
+      ],
+      "latency_to_enforce_ms_mean": 256.71656666666667,
+      "latency_to_enforce_ms_p50": 256.78650000000005,
+      "latency_to_enforce_ms_p95": 257.3112,
+      "latency_to_enforce_ms_p99": 257.31868000000003,
+      "latency_to_enforce_ms_ci95": [
+        256.58160998693614,
+        256.8515233463972
+      ]
+    },
+    {
+      "mode": "reactive",
+      "profile": "medium",
+      "count": 30,
+      "termination_observed_count": 30,
+      "still_running_after_observe_rate": 0.0,
+      "risk_window_ms_censored_rate": 0.0,
+      "post_revoke_deny_rate": 1.0,
+      "receiver_success_rate": 1.0,
+      "risk_window_ms_mean": 256.6773333333333,
+      "risk_window_ms_p50": 256.577,
+      "risk_window_ms_p95": 257.3478,
+      "risk_window_ms_p99": 257.59995,
+      "risk_window_ms_ci95": [
+        256.5036088774385,
+        256.8510577892281
+      ],
+      "risk_window_messages_mean": 0,
+      "risk_window_messages_p50": 0.0,
+      "risk_window_messages_p95": 0.0,
+      "risk_window_messages_p99": 0.0,
+      "risk_window_messages_ci95": [
+        0.0,
+        0.0
+      ],
+      "latency_to_enforce_ms_mean": 256.6773333333333,
+      "latency_to_enforce_ms_p50": 256.577,
+      "latency_to_enforce_ms_p95": 257.3478,
+      "latency_to_enforce_ms_p99": 257.59995,
+      "latency_to_enforce_ms_ci95": [
+        256.5036088774385,
+        256.8510577892281
+      ]
+    }
+  ],
+  "bootstrap_comparisons": [
+    {
+      "profile": "low",
+      "left_mode": "reactive",
+      "right_mode": "baseline-ext_authz",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -10.7348,
+        "ci95": [
+          -11.0,
+          -10.333333333333334
+        ]
+      }
+    },
+    {
+      "profile": "low",
+      "left_mode": "reactive",
+      "right_mode": "baseline-istio-custom",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -10.3949,
+        "ci95": [
+          -11.0,
+          -9.666666666666666
+        ]
+      }
+    },
+    {
+      "profile": "low",
+      "left_mode": "reactive",
+      "right_mode": "baseline-openfga",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -10.698433333333334,
+        "ci95": [
+          -11.0,
+          -10.265833333333338
+        ]
+      }
+    },
+    {
+      "profile": "medium",
+      "left_mode": "reactive",
+      "right_mode": "baseline-ext_authz",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -39.79443333333333,
+        "ci95": [
+          -41.0,
+          -37.93333333333333
+        ]
+      }
+    },
+    {
+      "profile": "medium",
+      "left_mode": "reactive",
+      "right_mode": "baseline-istio-custom",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -40.0793,
+        "ci95": [
+          -41.0,
+          -38.3
+        ]
+      }
+    },
+    {
+      "profile": "medium",
+      "left_mode": "reactive",
+      "right_mode": "baseline-openfga",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -39.7903,
+        "ci95": [
+          -41.0,
+          -37.9
+        ]
+      }
+    },
+    {
+      "profile": "high",
+      "left_mode": "reactive",
+      "right_mode": "baseline-ext_authz",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -187.06906666666666,
+        "ci95": [
+          -195.43416666666667,
+          -177.13166666666666
+        ]
+      }
+    },
+    {
+      "profile": "high",
+      "left_mode": "reactive",
+      "right_mode": "baseline-istio-custom",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -186.03138333333334,
+        "ci95": [
+          -197.03416666666666,
+          -173.51583333333343
+        ]
+      }
+    },
+    {
+      "profile": "high",
+      "left_mode": "reactive",
+      "right_mode": "baseline-openfga",
+      "risk_window_mean_diff_bootstrap": {
+        "mean_diff": -194.66105,
+        "ci95": [
+          -196.79999999999998,
+          -190.59916666666666
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa
+  namespace: reactive-mesh-authz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opa
+  template:
+    metadata:
+      labels:
+        app: opa
+    spec:
+      containers:
+        - name: opa
+          image: reactive-mesh/opa-envoy:dev
+          imagePullPolicy: IfNotPresent
+          args:
+            - run
+            - --server
+            - --addr=0.0.0.0:8181
+            - --diagnostic-addr=0.0.0.0:8282
+            - --set=plugins.envoy_ext_authz_grpc.addr=:9191
+            - --set=plugins.envoy_ext_authz_grpc.path=envoy/authz/allow
+            - --set=decision_logs.console=true
+            - --set=status.console=true
+            - /policy/policy.rego
+          ports:
+            - containerPort: 9191
+              name: grpc
+            - containerPort: 8181
+              name: http
+            - containerPort: 8282
+              name: diag
+          readinessProbe:
+            httpGet:
+              path: /health?plugins
+              port: 8282
+            initialDelaySeconds: 2
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /health?plugins
+              port: 8282
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          volumeMounts:
+            - name: policy
+              mountPath: /policy
+              readOnly: true
+      volumes:
+        - name: policy
+          configMap:
+            name: opa-baseline-policy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opa
+  namespace: reactive-mesh-authz
+spec:
+  selector:
+    app: opa
+  ports:
+    - name: grpc
+      port: 9191
+      targetPort: 9191
+    - name: http
+      port: 8181
+      targetPort: 8181
+    - name: diag
+      port: 8282
+      targetPort: 8282

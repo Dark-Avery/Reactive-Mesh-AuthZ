@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package reactive_mesh.demo;
+
+import "google/protobuf/empty.proto";
+
+message StreamRequest {
+  int32 interval_ms = 1;
+}
+
+message StreamResponse {
+  string body = 1;
+}
+
+service DemoService {
+  rpc Stream(StreamRequest) returns (stream StreamResponse);
+  rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

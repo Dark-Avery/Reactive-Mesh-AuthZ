@@ -1,0 +1,6 @@
+resources:
+  - namespace.yaml
+  - redis.yaml
+  - receiver.yaml
+  - grpc-server.yaml
+  - baseline-authz.yaml

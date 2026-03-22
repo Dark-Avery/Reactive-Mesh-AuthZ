@@ -1,0 +1,2 @@
+mode,run_id,stream_start_ns,revoke_sent_ns,termination_ns,latency_to_enforce_ms,risk_window_messages,post_revoke_deny,still_running_after_observe,receiver_status,receiver_body,output_lines
+reactive,1,1774097610993805974,1774097611993918962,1774097612320459516,326.541,1,1,0,200,"{""published"":true,""event_id"":""6999d827142a75837424d88e50abd379"",""event_type"":""session-revoked"",""identifiers"":[""sub:verify-reactive-sub"",""sid:verify-reactive-sid"",""jti:verify-reactive-jti""]}",8

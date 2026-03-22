@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: {{ .Values.images.redis }}
+          imagePullPolicy: IfNotPresent
+          args: ["redis-server", "--bind", "0.0.0.0", "--protected-mode", "no", "--save", "", "--appendonly", "no"]
+          ports:
+            - containerPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receiver
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: receiver
+  template:
+    metadata:
+      labels:
+        app: receiver
+    spec:
+      containers:
+        - name: receiver
+          image: {{ .Values.images.receiver }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_ADDR
+              value: redis:6379
+            - name: REDIS_CHANNEL
+              value: auth_events
+            - name: LISTEN_ADDR
+              value: 0.0.0.0:8080
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc-server
+  template:
+    metadata:
+      labels:
+        app: grpc-server
+    spec:
+      containers:
+        - name: grpc-server
+          image: {{ .Values.images.grpcServer }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: LISTEN_ADDR
+              value: 0.0.0.0:50051
+          ports:
+            - containerPort: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baseline-authz
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baseline-authz
+  template:
+    metadata:
+      labels:
+        app: baseline-authz
+    spec:
+      containers:
+        - name: baseline-authz
+          image: {{ .Values.images.baselineAuthz }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_ADDR
+              value: redis:6379
+            - name: LISTEN_ADDR
+              value: 0.0.0.0:9191
+            - name: BASELINE_MODE
+              value: {{ .Values.baselineMode | quote }}
+            - name: POLL_INTERVAL_MS
+              value: {{ .Values.pollIntervalMs | quote }}
+          ports:
+            - containerPort: 9191
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: envoy
+  template:
+    metadata:
+      labels:
+        app: envoy
+    spec:
+      containers:
+        - name: envoy
+          image: {{ if eq .Values.mode "reactive" }}{{ .Values.images.envoyReactive }}{{ else }}{{ .Values.images.envoyBaseline }}{{ end }}
+          imagePullPolicy: IfNotPresent
+          command: ["/usr/local/bin/envoy"]
+          args: ["-c", "/etc/envoy/envoy.yaml", "--log-level", "info"]
+          volumeMounts:
+            - name: envoy-config
+              mountPath: /etc/envoy
+          ports:
+            - containerPort: 8081
+            - containerPort: 9901
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: envoy-config

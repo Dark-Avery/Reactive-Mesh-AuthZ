@@ -1,0 +1,445 @@
+{
+  "generated_at_utc": "2026-03-22T20:37:15.192730+00:00",
+  "dataset": {
+    "modes": [
+      "baseline-ext_authz",
+      "baseline-istio-custom",
+      "baseline-openfga",
+      "reactive"
+    ],
+    "profiles": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "total_rows": 360
+  },
+  "verification": {
+    "reactive_smoke_ok": true,
+    "no_event_stability_ok": true,
+    "baseline_opa_ok": true,
+    "baseline_istio_custom_ok": true,
+    "baseline_openfga_ok": true,
+    "receiver_metrics_ok": true,
+    "envoy_metrics_ok": true,
+    "tla_ok": true,
+    "overhead_ok": true
+  },
+  "correctness": {
+    "reactive": {
+      "termination_after_revoke": true,
+      "post_revoke_deny": true,
+      "latency_to_enforce_ms": 257.233,
+      "risk_window_messages": 0,
+      "missed_revocation_rate": 0.0,
+      "false_termination_rate": 0.0
+    },
+    "no_event_stability": {
+      "still_running_after_window": true,
+      "message_count": 25
+    },
+    "comparators": {
+      "opa": {
+        "still_running_after_revoke": true,
+        "reopen_denied_without_streaming": true,
+        "summary_ok": true
+      },
+      "istio_custom": {
+        "still_running_after_revoke": true,
+        "reopen_denied_without_streaming": true,
+        "summary_ok": true
+      },
+      "openfga": {
+        "still_running_after_revoke": true,
+        "reopen_denied_without_streaming": true,
+        "summary_ok": true
+      }
+    },
+    "derived_rates": {
+      "false_termination_rate": 0.0,
+      "missed_revocation_rate": 0.0
+    }
+  },
+  "overhead_snapshot": {
+    "receiver": {
+      "cpu_millicores": 1,
+      "memory_mib": 0.0
+    },
+    "grpc-server": {
+      "cpu_millicores": 1,
+      "memory_mib": 3.0
+    },
+    "redis": {
+      "cpu_millicores": 2,
+      "memory_mib": 3.0
+    },
+    "envoy-reactive": {
+      "cpu_millicores": 19,
+      "memory_mib": 18.0
+    },
+    "baseline-control": {
+      "cpu_millicores": 3,
+      "memory_mib": 0.0
+    },
+    "envoy-baseline": {
+      "cpu_millicores": 20,
+      "memory_mib": 18.0
+    }
+  },
+  "modes": {
+    "baseline-ext_authz": {
+      "profiles": {
+        "high": {
+          "risk_window_messages_mean": 187.96666666666667,
+          "risk_window_messages_p95": 198.0,
+          "risk_window_ms_mean": 2021.2648,
+          "risk_window_ms_p95": 2016.2884999999999,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        },
+        "low": {
+          "risk_window_messages_mean": 10.733333333333333,
+          "risk_window_messages_p95": 11.0,
+          "risk_window_ms_mean": 2035.8512333333333,
+          "risk_window_ms_p95": 2116.7122999999997,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        },
+        "medium": {
+          "risk_window_messages_mean": 39.766666666666666,
+          "risk_window_messages_p95": 41.0,
+          "risk_window_ms_mean": 2036.6788666666666,
+          "risk_window_ms_p95": 2052.4405,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        }
+      },
+      "risk_window_messages_mean_across_profiles": 79.4888888888889,
+      "risk_window_ms_mean_across_profiles": 2031.2649666666666,
+      "post_revoke_deny_rate_across_profiles": 1.0
+    },
+    "baseline-istio-custom": {
+      "profiles": {
+        "high": {
+          "risk_window_messages_mean": 187.1,
+          "risk_window_messages_p95": 199.0,
+          "risk_window_ms_mean": 2027.9271,
+          "risk_window_ms_p95": 2015.6426,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        },
+        "low": {
+          "risk_window_messages_mean": 10.4,
+          "risk_window_messages_p95": 11.0,
+          "risk_window_ms_mean": 2037.1271,
+          "risk_window_ms_p95": 2122.8943499999996,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        },
+        "medium": {
+          "risk_window_messages_mean": 40.1,
+          "risk_window_messages_p95": 41.0,
+          "risk_window_ms_mean": 2030.2938666666666,
+          "risk_window_ms_p95": 2036.59835,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        }
+      },
+      "risk_window_messages_mean_across_profiles": 79.2,
+      "risk_window_ms_mean_across_profiles": 2031.7826888888887,
+      "post_revoke_deny_rate_across_profiles": 1.0
+    },
+    "baseline-openfga": {
+      "profiles": {
+        "high": {
+          "risk_window_messages_mean": 195.56666666666666,
+          "risk_window_messages_p95": 198.0,
+          "risk_window_ms_mean": 2024.6420333333333,
+          "risk_window_ms_p95": 2018.29395,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        },
+        "low": {
+          "risk_window_messages_mean": 10.7,
+          "risk_window_messages_p95": 11.0,
+          "risk_window_ms_mean": 2033.4153666666666,
+          "risk_window_ms_p95": 2034.3541,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        },
+        "medium": {
+          "risk_window_messages_mean": 39.733333333333334,
+          "risk_window_messages_p95": 41.0,
+          "risk_window_ms_mean": 2033.6318333333334,
+          "risk_window_ms_p95": 2049.71555,
+          "risk_window_ms_censored_rate": 1.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 0,
+          "still_running_after_observe_rate": 1.0,
+          "latency_to_enforce_ms_p50": null,
+          "latency_to_enforce_ms_p95": null,
+          "latency_to_enforce_ms_p99": null,
+          "latency_to_enforce_ms_mean": null
+        }
+      },
+      "risk_window_messages_mean_across_profiles": 82.0,
+      "risk_window_ms_mean_across_profiles": 2030.5630777777778,
+      "post_revoke_deny_rate_across_profiles": 1.0
+    },
+    "reactive": {
+      "profiles": {
+        "high": {
+          "risk_window_messages_mean": 0.9,
+          "risk_window_messages_p95": 1.0,
+          "risk_window_ms_mean": 256.52313333333336,
+          "risk_window_ms_p95": 257.27135,
+          "risk_window_ms_censored_rate": 0.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 30,
+          "still_running_after_observe_rate": 0.0,
+          "latency_to_enforce_ms_p50": 256.4325,
+          "latency_to_enforce_ms_p95": 257.27135,
+          "latency_to_enforce_ms_p99": 257.77439000000004,
+          "latency_to_enforce_ms_mean": 256.52313333333336
+        },
+        "low": {
+          "risk_window_messages_mean": 0,
+          "risk_window_messages_p95": 0.0,
+          "risk_window_ms_mean": 256.71656666666667,
+          "risk_window_ms_p95": 257.3112,
+          "risk_window_ms_censored_rate": 0.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 30,
+          "still_running_after_observe_rate": 0.0,
+          "latency_to_enforce_ms_p50": 256.78650000000005,
+          "latency_to_enforce_ms_p95": 257.3112,
+          "latency_to_enforce_ms_p99": 257.31868000000003,
+          "latency_to_enforce_ms_mean": 256.71656666666667
+        },
+        "medium": {
+          "risk_window_messages_mean": 0,
+          "risk_window_messages_p95": 0.0,
+          "risk_window_ms_mean": 256.6773333333333,
+          "risk_window_ms_p95": 257.3478,
+          "risk_window_ms_censored_rate": 0.0,
+          "post_revoke_deny_rate": 1.0,
+          "termination_observed_count": 30,
+          "still_running_after_observe_rate": 0.0,
+          "latency_to_enforce_ms_p50": 256.577,
+          "latency_to_enforce_ms_p95": 257.3478,
+          "latency_to_enforce_ms_p99": 257.59995,
+          "latency_to_enforce_ms_mean": 256.6773333333333
+        }
+      },
+      "risk_window_messages_mean_across_profiles": 0.3,
+      "risk_window_ms_mean_across_profiles": 256.63901111111113,
+      "post_revoke_deny_rate_across_profiles": 1.0
+    }
+  },
+  "family_answers": {
+    "request_time_vs_reactive": {
+      "low": {
+        "baseline-ext_authz": {
+          "risk_window_delta_messages": 10.733333333333333,
+          "risk_window_delta_ms": 1779.1346666666666,
+          "reactive_termination_count": 30,
+          "baseline_termination_count": 0
+        },
+        "baseline-istio-custom": {
+          "risk_window_delta_messages": 10.4,
+          "risk_window_delta_ms": 1780.4105333333332,
+          "reactive_termination_count": 30,
+          "baseline_termination_count": 0
+        }
+      },
+      "medium": {
+        "baseline-ext_authz": {
+          "risk_window_delta_messages": 39.766666666666666,
+          "risk_window_delta_ms": 1780.0015333333333,
+          "reactive_termination_count": 30,
+          "baseline_termination_count": 0
+        },
+        "baseline-istio-custom": {
+          "risk_window_delta_messages": 40.1,
+          "risk_window_delta_ms": 1773.6165333333333,
+          "reactive_termination_count": 30,
+          "baseline_termination_count": 0
+        }
+      },
+      "high": {
+        "baseline-ext_authz": {
+          "risk_window_delta_messages": 187.06666666666666,
+          "risk_window_delta_ms": 1764.7416666666666,
+          "reactive_termination_count": 30,
+          "baseline_termination_count": 0
+        },
+        "baseline-istio-custom": {
+          "risk_window_delta_messages": 186.2,
+          "risk_window_delta_ms": 1771.4039666666667,
+          "reactive_termination_count": 30,
+          "baseline_termination_count": 0
+        }
+      }
+    },
+    "centralized_authz_vs_reactive": {
+      "low": {
+        "baseline-openfga": {
+          "risk_window_delta_messages": 10.7,
+          "risk_window_delta_ms": 1776.6988,
+          "post_revoke_deny_rate": 1.0
+        }
+      },
+      "medium": {
+        "baseline-openfga": {
+          "risk_window_delta_messages": 39.733333333333334,
+          "risk_window_delta_ms": 1776.9545,
+          "post_revoke_deny_rate": 1.0
+        }
+      },
+      "high": {
+        "baseline-openfga": {
+          "risk_window_delta_messages": 194.66666666666666,
+          "risk_window_delta_ms": 1768.1189,
+          "post_revoke_deny_rate": 1.0
+        }
+      }
+    }
+  },
+  "deny_latency": [
+    {
+      "mode": "reactive",
+      "rows": 30,
+      "first_deny_count": 30,
+      "first_deny_after_revoke_ms_mean": 27.629333333333335,
+      "first_deny_after_revoke_ms_p50": 27.614,
+      "first_deny_after_revoke_ms_p95": 29.13065,
+      "first_deny_after_revoke_ms_p99": 29.24729,
+      "active_stream_alive_after_probe_rate": 0
+    },
+    {
+      "mode": "baseline-ext_authz",
+      "rows": 30,
+      "first_deny_count": 30,
+      "first_deny_after_revoke_ms_mean": 31.734833333333334,
+      "first_deny_after_revoke_ms_p50": 31.7425,
+      "first_deny_after_revoke_ms_p95": 32.93145,
+      "first_deny_after_revoke_ms_p99": 34.09926,
+      "active_stream_alive_after_probe_rate": 1
+    }
+  ],
+  "idp_smokes": {
+    "reactive": {
+      "sub": "user-alice-ebf81927-809e-44fb-ba7d-4b421f0c144a",
+      "sid": "e4620d86-5cc8-4b7f-b863-1d75c946361b",
+      "jti": "fd688d03-4d04-4306-918c-03e26f4719f4",
+      "receiver_status": 200,
+      "receiver_body": "{\"published\":true,\"event_id\":\"b34f225019c72c3b6d088b1e591cbe04\",\"event_type\":\"session-revoked\",\"validation_source\":\"plain-json\",\"identifiers\":[\"sub:user-alice-ebf81927-809e-44fb-ba7d-4b421f0c144a\",\"sid:e4620d86-5cc8-4b7f-b863-1d75c946361b\",\"jti:fd688d03-4d04-4306-918c-03e26f4719f4\"]}",
+      "latency_to_enforce_ms": 31.027,
+      "reopen_code": 1,
+      "reopen_output": "grpc-client-cpp: connect addr=127.0.0.1:38553 sub=<jwt> sid= jti= bearer=yes\ngrpc-client-cpp: stream ended code=13 msg=Received RST_STREAM with error code 2\n",
+      "terminated_after_revoke": true,
+      "reopen_denied": true,
+      "token_issuer": "http://demo-idp:8080/realms/reactive-mesh",
+      "token_subject": "user-alice-ebf81927-809e-44fb-ba7d-4b421f0c144a"
+    },
+    "baseline_ext_authz": {
+      "sub": "user-alice-5d2a2811-8d8f-403b-a25b-49b9269ce0d5",
+      "sid": "a72a42ff-857c-4673-90b6-8392faca8fd4",
+      "jti": "6e639b31-5c84-4034-a67e-1b691f7420ae",
+      "receiver_status": 200,
+      "receiver_body": "{\"published\":true,\"event_id\":\"bf4fecdd0b83696c5443d1bf767de943\",\"event_type\":\"session-revoked\",\"validation_source\":\"plain-json\",\"identifiers\":[\"sub:user-alice-5d2a2811-8d8f-403b-a25b-49b9269ce0d5\",\"sid:a72a42ff-857c-4673-90b6-8392faca8fd4\",\"jti:6e639b31-5c84-4034-a67e-1b691f7420ae\"]}",
+      "pre_lines": 5,
+      "post_lines": 15,
+      "still_running_after_revoke": true,
+      "reopen_code": 1,
+      "reopen_output": "grpc-client-cpp: connect addr=127.0.0.1:57577 sub=<jwt> sid= jti= bearer=yes\ngrpc-client-cpp: stream ended code=7 msg=\n",
+      "reopen_denied": true,
+      "token_issuer": "http://demo-idp:8080/realms/reactive-mesh",
+      "token_subject": "user-alice-5d2a2811-8d8f-403b-a25b-49b9269ce0d5"
+    },
+    "istio_custom": {
+      "mode": "baseline-istio-custom",
+      "sub": "user-alice-af7eee60-0478-41a4-b4ee-e0070b66eff4",
+      "sid": "7916ef61-b7a8-419b-8ff9-b8149da6cd33",
+      "jti": "66ba8590-7f12-427f-ba01-7d8203f47d28",
+      "receiver_status": 200,
+      "receiver_body": "{\"published\":true,\"event_id\":\"3464054bee5dd9c3e3848082ff394445\",\"event_type\":\"session-revoked\",\"validation_source\":\"plain-json\",\"identifiers\":[\"sub:user-alice-af7eee60-0478-41a4-b4ee-e0070b66eff4\",\"sid:7916ef61-b7a8-419b-8ff9-b8149da6cd33\",\"jti:66ba8590-7f12-427f-ba01-7d8203f47d28\"]}",
+      "pre_lines": 5,
+      "post_lines": 15,
+      "still_running_after_revoke": true,
+      "reopen_code": 1,
+      "reopen_output": "grpc-client-cpp: connect addr=127.0.0.1:51247 sub=<jwt> sid= jti= bearer=yes\ngrpc-client-cpp: stream ended code=7 msg={\"allowed\":false,\"source\":\"redis\",\"matched\":[\"sub:user-alice-af7eee60-0478-41a4-b4ee-e0070b66eff4\",\"sid:7916ef61-b7a8-419b-8ff9-b8149da6cd33\",\"jti:66ba8590-7f12-427f-ba01-7d8203f47d28\"]}\n",
+      "reopen_streamed": false,
+      "reopen_denied": true,
+      "token_issuer": "http://demo-idp:8080/realms/reactive-mesh",
+      "auth_flow": "demo-idp"
+    }
+  },
+  "required_baseline_metrics": {
+    "latency_to_enforce_ms": {
+      "reactive_available": true,
+      "comparator_note": "Для архитектур, которые принимают решение только в момент запроса или во внешнем централизованном контуре авторизации, прерывание уже активного потока не наблюдается. Поэтому `latency_to_enforce_ms` как время от revoke до завершения потока определяется только для реактивного режима, а для архитектур сравнения остаются `risk_window_ms`, `risk_window_messages` и `post_revoke_deny`."
+    },
+    "risk_window_delta_ms": true,
+    "risk_window_delta_messages": true,
+    "post_revoke_deny": true,
+    "overhead_no_events": true,
+    "false_termination_rate": true,
+    "missed_revocation_rate": true
+  },
+  "headline_findings": [
+    "Реактивный режим завершает активные потоки во всех трёх профилях нагрузки, тогда как все открытые архитектуры сравнения оставляют уже допущенный поток активным.",
+    "Реактивный режим удерживает окно риска около нуля в профилях low и medium и около одного сообщения в профиле high.",
+    "Архитектуры `OPA + Envoy`, `Istio CUSTOM` и `OpenFGA` обеспечивают запрет повторного открытия после revoke, но не прерывают уже активный поток.",
+    "Локальный OIDC/JWKS IdP подтверждает тот же архитектурный разрыв: реактивный режим завершает поток с bearer-token после revoke, а `OPA + Envoy` оставляет текущий поток активным и блокирует только повторное открытие.",
+    "`Istio CUSTOM` в том же OIDC/JWKS-сценарии подтверждает поведение авторизации в момент запроса: активный поток не прерывается, но повторное открытие после revoke отклоняется."
+  ]
+}

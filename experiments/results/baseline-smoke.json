@@ -1,0 +1,18 @@
+{
+  "pre_lines": 5,
+  "post_lines": 15,
+  "still_running_after_revoke": true,
+  "receiver_response": {
+    "published": true,
+    "event_id": "256a532ff9d363b7b98d01565b523aca",
+    "event_type": "session-revoked",
+    "validation_source": "plain-json",
+    "identifiers": [
+      "sub:baseline-smoke-sub-b19fba50",
+      "sid:baseline-smoke-sid-b19fba50",
+      "jti:baseline-smoke-jti-b19fba50"
+    ]
+  },
+  "reopen_code": 1,
+  "reopen_output": "grpc-client-cpp: connect addr=localhost:8082 sub=baseline-smoke-sub-b19fba50 sid=baseline-smoke-sid-b19fba50 jti=baseline-smoke-jti-b19fba50\ngrpc-client-cpp: stream ended code=7 msg={\"allowed\":false,\"source\":\"redis\",\"matched\":[\"sub:baseline-smoke-sub-b19fba50\",\"sid:baseline-smoke-sid-b19fba50\",\"jti:baseline-smoke-jti-b19fba50\"]}\n"
+}

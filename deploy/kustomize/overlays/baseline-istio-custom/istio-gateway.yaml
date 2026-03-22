@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: reactive-mesh-gateway
+  namespace: reactive-mesh-authz
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: grpc
+        protocol: HTTP2
+      hosts:
+        - "*"

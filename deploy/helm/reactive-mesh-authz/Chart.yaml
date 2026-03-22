@@ -1,0 +1,6 @@
+apiVersion: v2
+name: reactive-mesh-authz
+description: Reactive Mesh AuthZ MVP for reactive and baseline Envoy authorization experiments
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

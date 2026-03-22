@@ -1,0 +1,120 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 1s
+      retries: 30
+
+  receiver:
+    build:
+      context: .
+      dockerfile: receiver/Dockerfile
+    environment:
+      REDIS_ADDR: "redis:6379"
+      REDIS_CHANNEL: "auth_events"
+      LISTEN_ADDR: "0.0.0.0:8080"
+    depends_on:
+      redis:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  grpc-server:
+    build:
+      context: .
+      dockerfile: grpc/server/Dockerfile
+    environment:
+      LISTEN_ADDR: "0.0.0.0:50051"
+    ports:
+      - "50051:50051"
+
+  baseline-authz:
+    build:
+      context: .
+      dockerfile: baseline/opa/Dockerfile
+    environment:
+      REDIS_ADDR: "redis:6379"
+      LISTEN_ADDR: "0.0.0.0:9191"
+      BASELINE_MODE: "${BASELINE_MODE:-poll}"
+      POLL_INTERVAL_MS: "${POLL_INTERVAL_MS:-1000}"
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles: ["poll"]
+    ports:
+      - "9191:9191"
+
+  opa:
+    image: openpolicyagent/opa:latest-envoy-static
+    command:
+      - run
+      - --server
+      - --addr=0.0.0.0:8181
+      - --diagnostic-addr=0.0.0.0:8282
+      - --set=plugins.envoy_ext_authz_grpc.addr=:9191
+      - --set=plugins.envoy_ext_authz_grpc.path=envoy/authz/allow
+      - --set=decision_logs.console=true
+      - --set=status.console=true
+      - /policy/policy.rego
+    volumes:
+      - ./baseline/opa/policy.rego:/policy/policy.rego:ro
+    profiles: ["baseline"]
+    ports:
+      - "8181:8181"
+      - "9191:9191"
+      - "8282:8282"
+
+  envoy-reactive:
+    build:
+      context: .
+      dockerfile: envoy/Dockerfile
+      args:
+        # Можно поменять на другой stable tag Envoy
+        ENVOY_REF: "v1.37.0"
+        # build-image tag можно обновлять на актуальный из DockerHub
+        ENVOY_BUILD_IMAGE: "envoyproxy/envoy-build-ubuntu:full-86873047235e9b8232df989a5999b9bebf9db69c"
+        ENVOY_CONFIG: "envoy-reactive.yaml"
+    depends_on:
+      redis:
+        condition: service_healthy
+      grpc-server:
+        condition: service_started
+    profiles: ["reactive"]
+    ports:
+      - "8081:8081"
+      - "9901:9901"
+
+  envoy-baseline:
+    build:
+      context: .
+      dockerfile: envoy/Dockerfile
+      args:
+        ENVOY_REF: "v1.37.0"
+        ENVOY_BUILD_IMAGE: "envoyproxy/envoy-build-ubuntu:full-86873047235e9b8232df989a5999b9bebf9db69c"
+        ENVOY_CONFIG: "envoy-baseline.yaml"
+    depends_on:
+      opa:
+        condition: service_started
+      grpc-server:
+        condition: service_started
+    profiles: ["baseline"]
+    ports:
+      - "8082:8081"
+      - "9902:9901"
+
+  grpc-client:
+    build:
+      context: .
+      dockerfile: grpc/client/Dockerfile
+    environment:
+      GRPC_ADDR: "${GRPC_ADDR:-envoy-reactive:8081}"
+    # запускается вручную:
+    #   docker compose run --rm grpc-client --sub alice
+    depends_on:
+      grpc-server:
+        condition: service_started

@@ -1,0 +1,14 @@
+namespace: reactive-mesh-authz
+resources:
+  - ../../base
+  - ../../idp-demo
+  - envoy-baseline-configmap.yaml
+  - envoy-baseline.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: baseline-authz
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/2/value
+        value: push

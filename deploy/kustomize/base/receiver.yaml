@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: receiver
+  namespace: reactive-mesh-authz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: receiver
+  template:
+    metadata:
+      labels:
+        app: receiver
+    spec:
+      containers:
+        - name: receiver
+          image: reactive-mesh/receiver:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_ADDR
+              value: redis:6379
+            - name: REDIS_CHANNEL
+              value: auth_events
+            - name: LISTEN_ADDR
+              value: 0.0.0.0:8080
+            - name: STATE_TTL_SECONDS
+              value: "3600"
+            - name: DEDUP_TTL_SECONDS
+              value: "86400"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: receiver
+  namespace: reactive-mesh-authz
+spec:
+  selector:
+    app: receiver
+  ports:
+    - port: 8080
+      targetPort: 8080

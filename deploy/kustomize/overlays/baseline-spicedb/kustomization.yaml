@@ -1,0 +1,54 @@
+namespace: reactive-mesh-authz
+resources:
+  - ../../base
+  - ../../idp-demo
+  - spicedb.yaml
+  - envoy-baseline-configmap.yaml
+  - envoy-baseline.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: baseline-authz
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/2/value
+        value: spicedb
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_ADDR
+          value: spicedb:8443
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_PRESHARED_KEY
+          value: reactive-mesh-token
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_POLICY_SUBJECT
+          value: user:policy
+  - target:
+      kind: Deployment
+      name: receiver
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_SYNC_ENABLED
+          value: "true"
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_ADDR
+          value: spicedb:8443
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_PRESHARED_KEY
+          value: reactive-mesh-token
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: SPICEDB_POLICY_SUBJECT
+          value: user:policy

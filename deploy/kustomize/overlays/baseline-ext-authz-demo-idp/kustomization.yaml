@@ -1,0 +1,10 @@
+namespace: reactive-mesh-authz
+resources:
+  - ../baseline-ext-authz
+  - ../../idp-demo
+patches:
+  - path: envoy-baseline-configmap.yaml
+    target:
+      version: v1
+      kind: ConfigMap
+      name: envoy-baseline-config

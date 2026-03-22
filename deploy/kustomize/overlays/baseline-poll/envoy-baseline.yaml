@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: envoy-baseline
+  namespace: reactive-mesh-authz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: envoy-baseline
+  template:
+    metadata:
+      labels:
+        app: envoy-baseline
+    spec:
+      containers:
+        - name: envoy
+          image: reactive-mesh/envoy-baseline:dev
+          imagePullPolicy: IfNotPresent
+          args:
+            - --config-path
+            - /etc/envoy/envoy.yaml
+          ports:
+            - containerPort: 8081
+            - containerPort: 9901
+          volumeMounts:
+            - name: config
+              mountPath: /etc/envoy
+      volumes:
+        - name: config
+          configMap:
+            name: envoy-baseline-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: envoy-baseline
+  namespace: reactive-mesh-authz
+spec:
+  selector:
+    app: envoy-baseline
+  ports:
+    - name: grpc
+      port: 8081
+      targetPort: 8081
+    - name: admin
+      port: 9901
+      targetPort: 9901

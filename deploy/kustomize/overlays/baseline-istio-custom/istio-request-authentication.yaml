@@ -1,0 +1,12 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: reactive-mesh-demo-idp
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  jwtRules:
+    - issuer: http://demo-idp:8080/realms/reactive-mesh
+      jwksUri: http://demo-idp.reactive-mesh-authz.svc.cluster.local:8080/realms/reactive-mesh/protocol/openid-connect/certs

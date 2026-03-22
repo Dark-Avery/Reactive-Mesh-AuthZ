@@ -1,0 +1,4 @@
+namespace: reactive-mesh-authz
+resources:
+  - keycloak-realm-configmap.yaml
+  - keycloak.yaml
