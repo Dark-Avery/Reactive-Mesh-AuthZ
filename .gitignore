@@ -66,9 +66,14 @@ docs/evaluation/CORRECTNESS_REPORT.md
 docs/evaluation/REPORT.md
 docs/evaluation/EXPERIMENT_RESULTS_RU.md
 docs/evaluation/MATRIX_REPORT.md
+docs/related-work/NOVELTY_FROM_LITERATURE_RU.md
 
 # local thesis / presentation workspace
 deliverables/
+.tmp-pdfcheck/
+tmp/
+scripts/build_phone_docx.py
+scripts/audit_thesis_references.py
 
 *.swp
 *.tmp

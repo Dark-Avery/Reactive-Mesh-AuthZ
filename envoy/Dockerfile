@@ -4,9 +4,15 @@
 ARG ENVOY_BUILD_IMAGE=envoyproxy/envoy-build-ubuntu:full-86873047235e9b8232df989a5999b9bebf9db69c
 ARG ENVOY_REF=v1.37.0
 ARG ENVOY_CONFIG=envoy-reactive.yaml
+ARG BAZEL_JOBS=16
+ARG BAZEL_CPU=16
+ARG BAZEL_RAM_MB=32768
 
 FROM ${ENVOY_BUILD_IMAGE} AS builder-base
 ARG ENVOY_REF
+ARG BAZEL_JOBS
+ARG BAZEL_CPU
+ARG BAZEL_RAM_MB
 
 WORKDIR /workspace/envoy-custom
 
@@ -37,6 +43,9 @@ COPY envoy-custom/reactive_pep/ /workspace/envoy-custom/reactive_pep/
 
 # Match the Bazel version pinned by Envoy v1.37.0.
 ENV USE_BAZEL_VERSION=7.7.1
+ENV BAZEL_JOBS=${BAZEL_JOBS}
+ENV BAZEL_CPU=${BAZEL_CPU}
+ENV BAZEL_RAM_MB=${BAZEL_RAM_MB}
 RUN --mount=type=cache,target=/root/.cache/bazel \
     chmod +x /workspace/docker-patches/run_bazel_build.sh && \
     /workspace/docker-patches/run_bazel_build.sh

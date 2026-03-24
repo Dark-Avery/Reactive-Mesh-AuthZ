@@ -4,6 +4,9 @@ set -euo pipefail
 attempt=1
 max_attempts=3
 log_dir=/workspace/build-logs
+bazel_jobs="${BAZEL_JOBS:-16}"
+bazel_cpu="${BAZEL_CPU:-16}"
+bazel_ram_mb="${BAZEL_RAM_MB:-32768}"
 
 mkdir -p "${log_dir}"
 
@@ -12,7 +15,14 @@ while true; do
   echo "Starting bazel build attempt ${attempt}/${max_attempts}"
   echo "Log file: ${log_file}"
 
-  if CARGO_BAZEL_REPIN=true bazel build --noenable_bzlmod -c opt --distdir=/workspace/distfiles --jobs=16 --local_cpu_resources=16 --local_ram_resources=32768 //:envoy 2>&1 | tee "${log_file}"; then
+  if CARGO_BAZEL_REPIN=true bazel build \
+    --noenable_bzlmod \
+    -c opt \
+    --distdir=/workspace/distfiles \
+    --jobs="${bazel_jobs}" \
+    --local_cpu_resources="${bazel_cpu}" \
+    --local_ram_resources="${bazel_ram_mb}" \
+    //:envoy 2>&1 | tee "${log_file}"; then
     exit 0
   fi
 
